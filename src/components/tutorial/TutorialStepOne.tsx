@@ -26,6 +26,7 @@ export const TutorialStepOne = ({ onComplete, onNext, isCompleted }: TutorialSte
     return saved ? JSON.parse(saved) : [];
   });
   const [newCategory, setNewCategory] = useState({ name: "", discount: "" });
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export const TutorialStepOne = ({ onComplete, onNext, isCompleted }: TutorialSte
     }
   }, [categories, isCompleted, onComplete]);
 
-  const addCategory = () => {
+  const addCategory = async () => {
     if (!newCategory.name.trim()) {
       toast({
         title: "Category name required",
@@ -50,11 +51,16 @@ export const TutorialStepOne = ({ onComplete, onNext, isCompleted }: TutorialSte
     if (!newCategory.discount || parseFloat(newCategory.discount) <= 0) {
       toast({
         title: "Valid discount required",
-        description: "Please enter a discount amount greater than 0",
+        description: "Please enter a discount amount greater than $0.00",
         variant: "destructive"
       });
       return;
     }
+
+    setIsLoading(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     const category: Category = {
       id: Date.now().toString(),
@@ -64,10 +70,11 @@ export const TutorialStepOne = ({ onComplete, onNext, isCompleted }: TutorialSte
 
     setCategories(prev => [...prev, category]);
     setNewCategory({ name: "", discount: "" });
+    setIsLoading(false);
     
     toast({
       title: "Category added successfully",
-      description: `${category.name} category created with ${category.discount}% discount`,
+      description: `${category.name} category created with $${category.discount} discount`,
     });
   };
 
@@ -80,11 +87,11 @@ export const TutorialStepOne = ({ onComplete, onNext, isCompleted }: TutorialSte
   };
 
   const suggestedCategories = [
-    { name: "Electronics", discount: 15 },
-    { name: "Clothing", discount: 20 },
-    { name: "Books", discount: 10 },
-    { name: "Home & Garden", discount: 25 },
-    { name: "Sports Equipment", discount: 18 }
+    { name: "Electronics", discount: 50 },
+    { name: "Clothing", discount: 25 },
+    { name: "Books", discount: 15 },
+    { name: "Home & Garden", discount: 40 },
+    { name: "Sports Equipment", discount: 30 }
   ];
 
   const addSuggestedCategory = (suggested: { name: string; discount: number }) => {
@@ -97,7 +104,7 @@ export const TutorialStepOne = ({ onComplete, onNext, isCompleted }: TutorialSte
     
     toast({
       title: "Category added",
-      description: `${category.name} added with ${category.discount}% discount`,
+      description: `${category.name} added with $${category.discount} discount`,
     });
   };
 
@@ -152,30 +159,39 @@ export const TutorialStepOne = ({ onComplete, onNext, isCompleted }: TutorialSte
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="discount">Discount Percentage</Label>
+              <Label htmlFor="discount">Discount Amount (USD)</Label>
               <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">$</span>
                 <Input
                   id="discount"
                   type="number"
-                  placeholder="e.g., 15"
+                  placeholder="e.g., 25.00"
                   value={newCategory.discount}
                   onChange={(e) => setNewCategory(prev => ({ ...prev, discount: e.target.value }))}
-                  className="bg-background pr-8"
+                  className="bg-background pl-8"
                   min="0"
-                  max="100"
-                  step="0.1"
+                  step="0.01"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">%</span>
               </div>
             </div>
           </div>
           
           <Button 
             onClick={addCategory}
-            className="bg-gradient-primary hover:opacity-90 border-0"
+            disabled={isLoading}
+            className="bg-primary hover:bg-primary/90"
           >
-            <Plus className="w-4 h-4 mr-2" />
-            Add Category
+            {isLoading ? (
+              <>
+                <div className="w-4 h-4 mr-2 border-2 border-white/20 border-t-white animate-spin rounded-full" />
+                Adding...
+              </>
+            ) : (
+              <>
+                <Plus className="w-4 h-4 mr-2" />
+                Add Category
+              </>
+            )}
           </Button>
         </div>
 
@@ -194,7 +210,7 @@ export const TutorialStepOne = ({ onComplete, onNext, isCompleted }: TutorialSte
                 >
                   <div className="text-left">
                     <div className="font-medium">{suggested.name}</div>
-                    <div className="text-xs text-muted-foreground">{suggested.discount}% discount</div>
+                    <div className="text-xs text-muted-foreground">${suggested.discount} discount</div>
                   </div>
                 </Button>
               ))}
@@ -226,7 +242,7 @@ export const TutorialStepOne = ({ onComplete, onNext, isCompleted }: TutorialSte
                       <p className="font-medium">{category.name}</p>
                       <p className="text-sm text-muted-foreground flex items-center gap-1">
                         <DollarSign className="w-3 h-3" />
-                        {category.discount}% trade-in discount
+                        ${category.discount} trade-in discount
                       </p>
                     </div>
                   </div>
@@ -235,7 +251,7 @@ export const TutorialStepOne = ({ onComplete, onNext, isCompleted }: TutorialSte
                     variant="outline"
                     size="sm"
                     onClick={() => removeCategory(category.id)}
-                    className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                    className="text-destructive hover:text-destructive hover:bg-destructive/10 border-destructive/20"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -267,7 +283,7 @@ export const TutorialStepOne = ({ onComplete, onNext, isCompleted }: TutorialSte
             <Button
               onClick={onNext}
               size="lg"
-              className="w-full bg-gradient-primary hover:opacity-90 border-0"
+              className="w-full bg-primary hover:bg-primary/90"
             >
               Continue to Cart Detection
             </Button>

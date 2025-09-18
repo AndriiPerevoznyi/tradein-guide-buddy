@@ -22,6 +22,7 @@ export const TutorialStepThree = ({ onComplete, onNext, isCompleted }: TutorialS
     return saved ? JSON.parse(saved) : false;
   });
   const [codeSnippetCopied, setCodeSnippetCopied] = useState(false);
+  const [isInstalling, setIsInstalling] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -30,9 +31,15 @@ export const TutorialStepThree = ({ onComplete, onNext, isCompleted }: TutorialS
     }
   }, [extensionInstalled, isCompleted, onComplete]);
 
-  const markExtensionInstalled = () => {
+  const markExtensionInstalled = async () => {
+    setIsInstalling(true);
+    
+    // Simulate installation verification
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
     setExtensionInstalled(true);
     localStorage.setItem("shopify-tutorial-extension-installed", JSON.stringify(true));
+    setIsInstalling(false);
     
     toast({
       title: "Extension installed successfully!",
@@ -128,7 +135,7 @@ export const TutorialStepThree = ({ onComplete, onNext, isCompleted }: TutorialS
                           <p className="text-sm text-muted-foreground mb-2">
                             Click the button below to open your cart page in the theme editor
                           </p>
-                          <Button onClick={openThemeEditor} variant="outline" size="sm" className="hover:bg-primary/5">
+                          <Button onClick={openThemeEditor} variant="outline" size="sm">
                             <ExternalLink className="w-4 h-4 mr-2" />
                             Open Cart Page Editor
                           </Button>
@@ -164,11 +171,21 @@ export const TutorialStepThree = ({ onComplete, onNext, isCompleted }: TutorialS
                           </p>
                           <Button 
                             onClick={markExtensionInstalled}
-                            className="bg-gradient-success hover:opacity-90 border-0"
+                            disabled={isInstalling}
+                            className="bg-success hover:bg-success/90 text-success-foreground"
                             size="sm"
                           >
-                            <CheckCircle className="w-4 h-4 mr-2" />
-                            Mark as Installed
+                            {isInstalling ? (
+                              <>
+                                <div className="w-4 h-4 mr-2 border-2 border-white/20 border-t-white animate-spin rounded-full" />
+                                Installing...
+                              </>
+                            ) : (
+                              <>
+                                <CheckCircle className="w-4 h-4 mr-2" />
+                                Mark as Installed
+                              </>
+                            )}
                           </Button>
                         </div>
                       </div>
@@ -303,11 +320,21 @@ export const TutorialStepThree = ({ onComplete, onNext, isCompleted }: TutorialS
                           </p>
                           <Button 
                             onClick={markExtensionInstalled}
-                            className="bg-gradient-success hover:opacity-90 border-0"
+                            disabled={isInstalling}
+                            className="bg-success hover:bg-success/90 text-success-foreground"
                             size="sm"
                           >
-                            <CheckCircle className="w-4 h-4 mr-2" />
-                            Mark as Installed
+                            {isInstalling ? (
+                              <>
+                                <div className="w-4 h-4 mr-2 border-2 border-white/20 border-t-white animate-spin rounded-full" />
+                                Installing...
+                              </>
+                            ) : (
+                              <>
+                                <CheckCircle className="w-4 h-4 mr-2" />
+                                Mark as Installed
+                              </>
+                            )}
                           </Button>
                         </div>
                       </div>
@@ -325,7 +352,7 @@ export const TutorialStepThree = ({ onComplete, onNext, isCompleted }: TutorialS
                   <p className="text-sm text-muted-foreground mb-4">
                     Detailed video tutorial showing exactly how to modify your cart drawer theme files
                   </p>
-                  <Button variant="outline" className="hover:bg-primary/5">
+                  <Button variant="outline">
                     <PlayCircle className="w-4 h-4 mr-2" />
                     Watch Developer Guide
                   </Button>
@@ -363,7 +390,7 @@ export const TutorialStepThree = ({ onComplete, onNext, isCompleted }: TutorialS
             <Button
               onClick={onNext}
               size="lg"
-              className="w-full bg-gradient-primary hover:opacity-90 border-0"
+              className="w-full bg-primary hover:bg-primary/90"
             >
               Complete Setup
             </Button>

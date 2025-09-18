@@ -13,6 +13,7 @@ interface TutorialStepFourProps {
 
 export const TutorialStepFour = ({ onComplete, onNext, isCompleted }: TutorialStepFourProps) => {
   const [setupCompleted, setSetupCompleted] = useState(false);
+  const [isLaunching, setIsLaunching] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -22,9 +23,15 @@ export const TutorialStepFour = ({ onComplete, onNext, isCompleted }: TutorialSt
     }
   }, [isCompleted, onComplete]);
 
-  const completeSetup = () => {
+  const completeSetup = async () => {
+    setIsLaunching(true);
+    
+    // Simulate final setup completion
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
     setSetupCompleted(true);
     localStorage.setItem("shopify-tutorial-completed", JSON.stringify(true));
+    setIsLaunching(false);
     
     toast({
       title: "🎉 Setup Complete!",
@@ -59,17 +66,17 @@ export const TutorialStepFour = ({ onComplete, onNext, isCompleted }: TutorialSt
   ];
 
   return (
-    <Card className="shadow-tutorial-lg bg-gradient-card border-0 overflow-hidden">
-      <div className="bg-gradient-success absolute inset-x-0 top-0 h-1"></div>
+    <Card className="shadow-lg bg-card border">
+      <div className="bg-success absolute inset-x-0 top-0 h-1"></div>
       
       <CardHeader className="text-center pb-6">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-16 h-16 bg-gradient-success rounded-full flex items-center justify-center animate-success-bounce">
-            <Rocket className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 bg-success rounded-full flex items-center justify-center animate-bounce">
+            <Rocket className="w-8 h-8 text-success-foreground" />
           </div>
         </div>
         
-        <CardTitle className="text-3xl mb-2 bg-gradient-to-r from-success to-primary bg-clip-text text-transparent">
+        <CardTitle className="text-3xl mb-2 text-success">
           🎉 Congratulations!
         </CardTitle>
         <CardDescription className="text-lg">
@@ -77,9 +84,9 @@ export const TutorialStepFour = ({ onComplete, onNext, isCompleted }: TutorialSt
         </CardDescription>
 
         <div className="flex justify-center mt-4">
-          <Badge className="bg-gradient-success text-white border-0 px-4 py-2 text-sm">
+          <Badge className="bg-success text-success-foreground border-0 px-4 py-2 text-sm">
             <CheckCircle className="w-4 h-4 mr-2" />
-            Trade-in Pro Active
+            iceep Trade-in Active
           </Badge>
         </div>
       </CardHeader>
@@ -159,18 +166,28 @@ export const TutorialStepFour = ({ onComplete, onNext, isCompleted }: TutorialSt
           {!setupCompleted ? (
             <Button 
               onClick={completeSetup}
+              disabled={isLaunching}
               size="lg"
-              className="w-full bg-gradient-success hover:opacity-90 border-0 text-lg py-6"
+              className="w-full bg-success hover:bg-success/90 text-success-foreground text-lg py-6"
             >
-              <Rocket className="w-5 h-5 mr-2" />
-              Start Trading In!
+              {isLaunching ? (
+                <>
+                  <div className="w-5 h-5 mr-2 border-2 border-white/20 border-t-white animate-spin rounded-full" />
+                  Launching...
+                </>
+              ) : (
+                <>
+                  <Rocket className="w-5 h-5 mr-2" />
+                  Start Trading In!
+                </>
+              )}
             </Button>
           ) : (
             <div className="space-y-3">
               <Button 
                 onClick={goToDashboard}
                 size="lg"
-                className="w-full bg-gradient-primary hover:opacity-90 border-0 text-lg py-6"
+                className="w-full bg-primary hover:bg-primary/90 text-lg py-6"
               >
                 <BarChart3 className="w-5 h-5 mr-2" />
                 Go to Dashboard
@@ -218,7 +235,7 @@ export const TutorialStepFour = ({ onComplete, onNext, isCompleted }: TutorialSt
         {/* Thank You Message */}
         <div className="text-center pt-4 border-t border-border">
           <p className="text-muted-foreground text-sm">
-            Thank you for choosing <strong className="text-primary">Trade-in Pro</strong>! 
+            Thank you for choosing <strong className="text-primary">iceep</strong>! 
             We're excited to help you grow your business with sustainable trade-in solutions.
           </p>
         </div>

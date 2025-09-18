@@ -113,52 +113,52 @@ const Tutorial = () => {
         </div>
 
         {/* Progress Overview */}
-        <Card className="mb-8">
-          <CardHeader>
-            <div className="flex items-center justify-between mb-4">
-              <CardTitle>Setup Progress</CardTitle>
-              <Badge variant="secondary">
-                {tutorialData.completedSteps.length} of {steps.length} completed
-              </Badge>
+    <Card className="mb-8">
+      <CardHeader>
+        <div className="flex items-center justify-between mb-4">
+          <CardTitle>Setup Progress</CardTitle>
+          <Badge variant="secondary">
+            {tutorialData.completedSteps.length} of {steps.length} completed
+          </Badge>
+        </div>
+        <Progress value={progressPercentage} className="mb-4" />
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+          {steps.map((step, index) => (
+            <div
+              key={step.id}
+              className={`flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer hover:bg-accent/50 ${
+                index === currentStep ? 'bg-primary/10 border border-primary/20' : ''
+              } ${step.completed ? 'bg-success/10' : ''}`}
+              onClick={() => setCurrentStep(index)}
+            >
+              <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                step.completed 
+                  ? 'bg-success text-success-foreground' 
+                  : index === currentStep 
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'bg-muted text-muted-foreground'
+              }`}>
+                {step.completed ? (
+                  <CheckCircle className="w-4 h-4" />
+                ) : (
+                  <step.icon className="w-4 h-4" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className={`font-medium text-sm truncate ${
+                  step.completed ? 'text-success' : index === currentStep ? 'text-primary' : 'text-foreground'
+                }`}>
+                  {step.title}
+                </p>
+                <p className="text-xs text-muted-foreground truncate">
+                  {step.description}
+                </p>
+              </div>
             </div>
-            <Progress value={progressPercentage} className="mb-4" />
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-              {steps.map((step, index) => (
-                <div
-                  key={step.id}
-                  className={`flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer hover:bg-accent/50 ${
-                    index === currentStep ? 'bg-primary/10 border border-primary/20' : ''
-                  } ${step.completed ? 'bg-success/10' : ''}`}
-                  onClick={() => setCurrentStep(index)}
-                >
-                  <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                    step.completed 
-                      ? 'bg-success text-success-foreground' 
-                      : index === currentStep 
-                        ? 'bg-primary text-primary-foreground' 
-                        : 'bg-muted text-muted-foreground'
-                  }`}>
-                    {step.completed ? (
-                      <CheckCircle className="w-4 h-4" />
-                    ) : (
-                      <step.icon className="w-4 h-4" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className={`font-medium text-sm truncate ${
-                      step.completed ? 'text-success' : index === currentStep ? 'text-primary' : 'text-foreground'
-                    }`}>
-                      {step.title}
-                    </p>
-                    <p className="text-xs text-muted-foreground truncate">
-                      {step.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardHeader>
-        </Card>
+          ))}
+        </div>
+      </CardHeader>
+    </Card>
 
         {/* Current Step Content */}
         <div>

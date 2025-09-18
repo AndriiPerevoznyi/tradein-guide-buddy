@@ -20,6 +20,7 @@ export const TutorialStepTwo = ({ onComplete, onNext, isCompleted }: TutorialSte
   });
   const [isDetecting, setIsDetecting] = useState(false);
   const [detectionComplete, setDetectionComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -52,9 +53,15 @@ export const TutorialStepTwo = ({ onComplete, onNext, isCompleted }: TutorialSte
     });
   };
 
-  const manuallySetCartType = (type: CartType) => {
+  const manuallySetCartType = async (type: CartType) => {
+    setIsLoading(true);
+    
+    // Simulate configuration saving
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
     setCartType(type);
     setDetectionComplete(true);
+    setIsLoading(false);
     
     toast({
       title: "Cart type set",
@@ -110,7 +117,7 @@ export const TutorialStepTwo = ({ onComplete, onNext, isCompleted }: TutorialSte
               <Button 
                 onClick={detectCartType}
                 size="lg"
-                className="bg-gradient-primary hover:opacity-90 border-0"
+                className="bg-primary hover:bg-primary/90"
               >
                 <ShoppingCart className="w-4 h-4 mr-2" />
                 Detect Cart Type
@@ -120,7 +127,7 @@ export const TutorialStepTwo = ({ onComplete, onNext, isCompleted }: TutorialSte
                 <Button 
                   disabled
                   size="lg"
-                  className="bg-gradient-primary hover:opacity-90 border-0"
+                  className="bg-primary hover:bg-primary/90"
                 >
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   Analyzing your store...
@@ -139,16 +146,16 @@ export const TutorialStepTwo = ({ onComplete, onNext, isCompleted }: TutorialSte
                 <Button 
                   variant="outline" 
                   onClick={() => manuallySetCartType('page')}
-                  className="hover:bg-primary/5"
+                  disabled={isLoading}
                 >
-                  Cart Page
+                  {isLoading ? 'Setting...' : 'Cart Page'}
                 </Button>
                 <Button 
                   variant="outline" 
                   onClick={() => manuallySetCartType('drawer')}
-                  className="hover:bg-primary/5"
+                  disabled={isLoading}
                 >
-                  Cart Drawer
+                  {isLoading ? 'Setting...' : 'Cart Drawer'}
                 </Button>
               </div>
             </div>
@@ -265,7 +272,7 @@ export const TutorialStepTwo = ({ onComplete, onNext, isCompleted }: TutorialSte
               <Button
                 onClick={onNext}
                 size="lg"
-                className="w-full bg-gradient-primary hover:opacity-90 border-0"
+                className="w-full bg-primary hover:bg-primary/90"
               >
                 Continue to Extension Setup
               </Button>
