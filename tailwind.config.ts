@@ -22,14 +22,25 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          light: "hsl(var(--primary-light))",
+          glow: "hsl(var(--primary-glow))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+          light: "hsl(var(--success-light))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
+        info: {
+          DEFAULT: "hsl(var(--info))",
+          foreground: "hsl(var(--info-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -63,6 +74,23 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-success": "var(--gradient-success)",
+        "gradient-hero": "var(--gradient-hero)",
+        "gradient-card": "var(--gradient-card)",
+      },
+      boxShadow: {
+        "tutorial-sm": "var(--shadow-sm)",
+        "tutorial-md": "var(--shadow-md)", 
+        "tutorial-lg": "var(--shadow-lg)",
+        "tutorial-glow": "var(--shadow-glow)",
+      },
+      transitionDuration: {
+        "fast": "var(--transition-fast)",
+        "normal": "var(--transition-normal)",
+        "slow": "var(--transition-slow)",
+      },
       keyframes: {
         "accordion-down": {
           from: {
@@ -80,10 +108,44 @@ export default {
             height: "0",
           },
         },
+        "slide-in": {
+          from: {
+            opacity: "0",
+            transform: "translateX(24px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateX(0)",
+          },
+        },
+        "fade-in": {
+          from: {
+            opacity: "0",
+            transform: "translateY(8px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "success-bounce": {
+          "0%, 20%, 60%, 100%": {
+            transform: "translateY(0)",
+          },
+          "40%": {
+            transform: "translateY(-4px)",
+          },
+          "80%": {
+            transform: "translateY(-2px)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "slide-in": "slide-in 0.3s ease-out",
+        "fade-in": "fade-in 0.2s ease-out",
+        "success-bounce": "success-bounce 0.6s ease-out",
       },
     },
   },
