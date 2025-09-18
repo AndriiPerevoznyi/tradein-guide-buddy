@@ -100,39 +100,35 @@ const Tutorial = () => {
   const CurrentStepComponent = steps[currentStep].component;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      <div className="container max-w-6xl mx-auto py-8 px-4">
+    <div className="min-h-screen bg-background">
+      <div className="container max-w-4xl mx-auto py-8 px-4">
         {/* Header */}
-        <div className="text-center mb-8 animate-fade-in">
-          <div className="inline-flex items-center gap-2 bg-gradient-primary text-white px-4 py-2 rounded-full text-sm font-medium mb-4 shadow-tutorial-glow">
-            <Sparkles className="w-4 h-4" />
-            Setup Tutorial
-          </div>
-          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
-            Welcome to Trade-in Pro
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold mb-3">
+            Setup Your Trade-in Program
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Let's get your trade-in program set up in just a few minutes. We'll guide you through each step.
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Let's get your trade-in program configured in a few simple steps.
           </p>
         </div>
 
         {/* Progress Overview */}
-        <Card className="mb-8 shadow-tutorial-md bg-gradient-card border-0 animate-fade-in">
+        <Card className="mb-8">
           <CardHeader>
             <div className="flex items-center justify-between mb-4">
-              <CardTitle className="text-xl">Setup Progress</CardTitle>
-              <Badge variant="outline" className="bg-success-light text-success border-success/20">
+              <CardTitle>Setup Progress</CardTitle>
+              <Badge variant="secondary">
                 {tutorialData.completedSteps.length} of {steps.length} completed
               </Badge>
             </div>
-            <Progress value={progressPercentage} className="h-3 mb-4" />
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <Progress value={progressPercentage} className="mb-4" />
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
               {steps.map((step, index) => (
                 <div
                   key={step.id}
-                  className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-normal cursor-pointer hover:bg-accent/50 ${
+                  className={`flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer hover:bg-accent/50 ${
                     index === currentStep ? 'bg-primary/10 border border-primary/20' : ''
-                  } ${step.completed ? 'bg-success-light/50' : ''}`}
+                  } ${step.completed ? 'bg-success/10' : ''}`}
                   onClick={() => setCurrentStep(index)}
                 >
                   <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
@@ -165,7 +161,7 @@ const Tutorial = () => {
         </Card>
 
         {/* Current Step Content */}
-        <div className="animate-slide-in">
+        <div>
           <CurrentStepComponent
             onComplete={() => handleStepComplete(steps[currentStep].id)}
             onNext={handleNext}
@@ -174,7 +170,7 @@ const Tutorial = () => {
         </div>
 
         {/* Navigation */}
-        <Card className="mt-8 shadow-tutorial-md bg-gradient-card border-0">
+        <Card className="mt-8">
           <CardFooter className="flex justify-between items-center p-6">
             <Button
               variant="outline"
@@ -193,7 +189,7 @@ const Tutorial = () => {
             <Button
               onClick={handleNext}
               disabled={currentStep === steps.length - 1 || !steps[currentStep].completed}
-              className="flex items-center gap-2 bg-gradient-primary hover:opacity-90 border-0"
+              className="flex items-center gap-2"
             >
               {currentStep === steps.length - 1 ? "Complete Setup" : "Next Step"}
               <ArrowRight className="w-4 h-4" />
@@ -205,8 +201,8 @@ const Tutorial = () => {
         <div className="mt-8 text-center">
           <p className="text-sm text-muted-foreground">
             Need help? Contact us at{" "}
-            <a href="mailto:support@tradein-pro.com" className="text-primary hover:underline font-medium">
-              support@tradein-pro.com
+            <a href="mailto:support@iceep.io" className="text-primary hover:underline font-medium">
+              support@iceep.io
             </a>
           </p>
         </div>

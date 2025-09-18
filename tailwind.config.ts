@@ -22,8 +22,6 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-          light: "hsl(var(--primary-light))",
-          glow: "hsl(var(--primary-glow))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -32,7 +30,6 @@ export default {
         success: {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
-          light: "hsl(var(--success-light))",
         },
         warning: {
           DEFAULT: "hsl(var(--warning))",
@@ -73,23 +70,6 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-      },
-      backgroundImage: {
-        "gradient-primary": "var(--gradient-primary)",
-        "gradient-success": "var(--gradient-success)",
-        "gradient-hero": "var(--gradient-hero)",
-        "gradient-card": "var(--gradient-card)",
-      },
-      boxShadow: {
-        "tutorial-sm": "var(--shadow-sm)",
-        "tutorial-md": "var(--shadow-md)", 
-        "tutorial-lg": "var(--shadow-lg)",
-        "tutorial-glow": "var(--shadow-glow)",
-      },
-      transitionDuration: {
-        "fast": "var(--transition-fast)",
-        "normal": "var(--transition-normal)",
-        "slow": "var(--transition-slow)",
       },
       keyframes: {
         "accordion-down": {
