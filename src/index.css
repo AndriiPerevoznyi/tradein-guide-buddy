@@ -1,11 +1,163 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+/* Modern CSS following Shopify design principles */
 
-/* Shopify Polaris design system */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
   background-color: #FAFBFB;
-  color: #212B36;
+  color: #202223;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F6F6F7 0%, #FAFBFB 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.content-wrapper {
+  max-width: 440px;
+  width: 100%;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.logo-circle {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #00A047 0%, #00B84A 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 16px rgba(0, 160, 71, 0.12);
+}
+
+.main-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #202223;
+  text-align: center;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: #6B7280;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  line-height: 1.5;
+}
+
+.card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.02);
+  border: 1px solid #E1E3E5;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid #F1F2F4;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #202223;
+  margin-bottom: 0.5rem;
+}
+
+.card-description {
+  font-size: 0.875rem;
+  color: #6B7280;
+  line-height: 1.5;
+}
+
+.card-content {
+  padding: 1rem 1.5rem 1.5rem;
+}
+
+.primary-button {
+  width: 100%;
+  background: linear-gradient(135deg, #00A047 0%, #00B84A 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  letter-spacing: 0.025em;
+}
+
+.primary-button:hover {
+  background: linear-gradient(135deg, #00924A 0%, #00A047 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 160, 71, 0.2);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+}
+
+.support-text {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+.support-link {
+  color: #00A047;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.support-link:hover {
+  color: #00924A;
+  text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .page-container {
+    padding: 1rem;
+  }
+  
+  .content-wrapper {
+    max-width: 100%;
+  }
+  
+  .main-heading {
+    font-size: 1.75rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .card-header,
+  .card-content {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
 }
